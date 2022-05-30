@@ -1,0 +1,77 @@
+﻿@page "/Clientes"
+
+<h2>Clientes</h2>
+
+<div class="table-responsive">
+    <table class="table table-active table-primary text-center">
+        <thead class="">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Estatus</th>
+                <th>Aprobacion</th>
+                <th>Fecha de Alta</th>
+                <th>Monto Solicitud</th>
+            </tr>
+        </thead>
+        @if (clientes.Count() > 0)
+        {
+            @foreach (var cliente in clientes.ToList().OrderBy(m=>m.Id))
+            {
+                <tr class="text-center">
+                    <td>@cliente.Id</td>
+                    <td>@cliente.Name</td>
+                    <td>@cliente.Age</td>
+                    <td>@cliente.Phone</td>
+                    <td>@cliente.Email</td>
+                    <td>@cliente.Estatus</td>
+                    <td>@cliente.Aprobacion</td>
+                    <td>@cliente.FechaAlta.ToString("dd MMM, yyyy")</td>
+                    <td>$@cliente.MontoSolicitud</td>
+                    <td>@cliente.Pagos.FirstOrDefault()?.Aplicado</td>
+                </tr>
+            }
+        }
+        else
+        {
+            
+        }
+    </table>
+</div>
+<div class="table-responsive">
+    <table class="table table-active text-center">
+        <thead class="table-dark">
+            <tr>
+                <th>Cliente Id</th>
+                <th>Monto Total</th>
+                <th>Adeudo</th>
+            </tr>
+        </thead>
+        @if (clientes.Count() > 0)
+        {
+            @foreach (var ajuste in ajustes.ToList().OrderBy(m=>m.ClienteId))
+            {
+                @if (ajuste.MontoTotal != 0)
+                {
+                    <tr>
+                    <td>@ajuste.ClienteId</td>
+                    <td>$@ajuste.MontoTotal</td>
+                    @if (ajuste.Adeudo < 0)
+                        {
+                            <td class="text-danger">$@ajuste.Adeudo</td>
+                        }
+                        else
+                        {
+                            <td>$@ajuste.Adeudo</td>
+                        }
+                </tr>
+                }
+            }
+        }
+    </table>
+</div>
+
+
